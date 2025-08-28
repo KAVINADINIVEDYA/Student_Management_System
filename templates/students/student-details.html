@@ -10,7 +10,7 @@
 <div class="col-sm-12">
 <h3 class="page-title">Student Details</h3>
 <ul class="breadcrumb">
-<li class="breadcrumb-item"><a href="students.html">Student</a></li>
+<li class="breadcrumb-item"><a href="/student">Student</a></li>
 <li class="breadcrumb-item active">Student Details</li>
 </ul>
 </div>
@@ -23,39 +23,39 @@
 <div class="about-info">
 <h4>About Me</h4>
 <div class="media mt-3">
-<img src="assets/img/user.jpg" class="mr-3" alt="...">
+<img src="{{student.student_image.url}}" class="mr-3" alt="...">
 <div class="media-body">
 <ul>
 <li>
 <span class="title-span">Full Name : </span>
-<span class="info-span">Daisy Parks</span>
+<span class="info-span">{{ student.first_name}}</span>
 </li>
 <li>
 <span class="title-span">Department : </span>
-<span class="info-span">Computer Science</span>
+<span class="info-span">{{student.section}}</span>
 </li>
 <li>
 <span class="title-span">Mobile : </span>
-<span class="info-span">+91 89657 48512</span>
+<span class="info-span">{{student.mobile_number}}</span>
 </li>
 <li>
 <span class="title-span">Email : </span>
-<span class="info-span"><a href="https://preschool.dreamguystech.com/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7216131b010b32151f131b1e5c111d1f">[email&#160;protected]</a></span>
+<span class="info-span"><a href="{{student.student_email}}" class="__cf_email__" data-cfemail="7216131b010b32151f131b1e5c111d1f">[email&#160;protected]</a></span>
 </li>
 <li>
 <span class="title-span">Gender : </span>
-<span class="info-span">Male</span>
+<span class="info-span">{{student.gender}}</span>
 </li>
 <li>
 <span class="title-span">DOB : </span>
-<span class="info-span">22 Apr 1995</span>
+<span class="info-span">{{student.date_of_birth}}</span>
 </li>
 </ul>
 </div>
 </div>
 <div class="row mt-3">
 <div class="col-md-12">
-<p>Hello I am Daisy Parks. Lorem Ipsum is simply dummy text of the printing and typesetting industry, simply dummy text of the printing and typesetting industry.</p>
+<p>Hello I am Kavinadi Nivedya. I am passionate about data science, networking, and technology-driven problem solving, with active involvement in volunteering and leadership roles.</p>
 </div>
 </div>
 <div class="row follow-sec">
@@ -81,13 +81,13 @@
 <div class="row mt-2">
 <div class="col-md-12">
 <h5>Permanent Address</h5>
-<p>480, Estern Avenue, Courtage area, New York</p>
+<p>254, Viharagoda, Badulla</p>
 </div>
 </div>
 <div class="row mt-2">
 <div class="col-md-12">
 <h5>Present Address</h5>
-<p>480, Estern Avenue, Courtage area, New York</p>
+<p>254, Viharagoda, Badulla</p>
 </div>
 </div>
 </div>
@@ -97,28 +97,28 @@
 <div class="col-md-12">
 <div class="skill-info">
 <h4>Skills</h4>
-<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry, simply dummy text of the printing and typesetting industry</p>
+<p>Data Science and Analytics,Python,Machine Learning,Database Management</p>
 <ul>
 <li>
-<label>Lorem Ipsum is simply</label>
+<label>Data Science and Analytics</label>
 <div class="progress">
 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
 </div>
 </li>
 <li>
-<label>Lorem Ipsum is simply</label>
+<label>Python</label>
 <div class="progress">
 <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="69" aria-valuemin="0" aria-valuemax="100" style="width: 69%"></div>
 </div>
 </li>
 <li>
-<label>Lorem Ipsum is simply</label>
+<label>Machine Learning</label>
 <div class="progress">
 <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100" style="width: 86%"></div>
 </div>
 </li>
 <li>
- <label>Lorem Ipsum is simply</label>
+<label>Database Management</label>
 <div class="progress">
 <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" style="width: 65%"></div>
 </div>
@@ -127,19 +127,18 @@
 <div class="row mt-3">
 <div class="col-md-12">
 <h5>Education</h5>
-<p class="mt-3">Secondary Schooling at xyz school of secondary education, Mumbai.</p>
-<p>Higher Secondary Schooling at xyz school of higher secondary education, Mumbai.</p>
-<p>Bachelor of Science at Abc College of Art and Science, Chennai.</p>
-<p>Master of Science at Cdm College of Engineering and Technology, Pune.</p>
+<p class="mt-3">Higher Secondary Schooling at B/Vihara Mahadevi Girls’ School.</p>
+<p>BSc (Hons) in Information and Communication Engineering at SLTC Research University, Sri Lanka (Ongoing, Batch 2026A).</p>
+<p>Bachelor of Information Technology (BIT) at University of Colombo, Sri Lanka(Ongoing Batch 2023).</p>
 </div>
 </div>
 <div class="row mt-3">
 <div class="col-md-12">
 <h5>Certificates</h5>
-<p class="mt-3">1st Prise in Running Competition.</p>
-<p>Lorem Ipsum is simply dummy text.</p>
-<p>Won overall star student in higher secondary education.</p>
-<p>Lorem Ipsum is simply dummy text.</p>
+<p class="mt-3">Cisco Networking Essentials. </p>
+<p>Introduction to Data Science.</p>
+<p>Machine Learning Basics.</p>
+<p>ython for Everybody.</p>
 </div>
 </div>
 </div>
@@ -182,7 +181,7 @@
 </div>
 
 <footer>
-<p>Copyright © 2020 Dreamguys.</p>
+<p> Smart learning for a smarter future. </p>
 </footer>
 
 </div>
