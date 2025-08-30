@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
    
@@ -41,7 +40,9 @@
             <ul class="nav user-menu">
                <li class="nav-item dropdown noti-dropdown">
                   <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                  <i class="far fa-bell"></i> <span class="badge badge-pill">3</span>
+                   {% if unread_notification_count > 0 %}
+                  <i class="far fa-bell"></i> <span class="badge badge-pill">{{unread_notification_count}}</span>
+                  {% endif %}
                   </a>
                   <div class="dropdown-menu notifications">
                      <div class="topnav-dropdown-header">
@@ -50,6 +51,7 @@
                      </div>
                      <div class="noti-content">
                         <ul class="notification-list">
+                           {% for notification in unread_notification %}
                            <li class="notification-message">
                               <a href="#">
                                  <div class="media">
@@ -57,51 +59,14 @@
                                     <img class="avatar-img rounded-circle" alt="User Image" src="assets/img/profiles/avatar-02.jpg">
                                     </span>
                                     <div class="media-body">
-                                       <p class="noti-details"><span class="noti-title">Carlson Tech</span> has approved <span class="noti-title">your estimate</span></p>
-                                       <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
+                                       <p class="noti-details"><span class="noti-title">{{ notification.user.username }}</span> {{ notification.message }} <span class="noti-title">your estimate</span></p>
+                                       <p class="noti-time"><span class="notification-time">{{ notification.created_at|timesince }} ago</span></p>
                                     </div>
                                  </div>
                               </a>
                            </li>
-                           <li class="notification-message">
-                              <a href="#">
-                                 <div class="media">
-                                    <span class="avatar avatar-sm">
-                                    <img class="avatar-img rounded-circle" alt="User Image" src="assets/img/profiles/avatar-11.jpg">
-                                    </span>
-                                    <div class="media-body">
-                                       <p class="noti-details"><span class="noti-title">International Software Inc</span> has sent you a invoice in the amount of <span class="noti-title">$218</span></p>
-                                       <p class="noti-time"><span class="notification-time">6 mins ago</span></p>
-                                    </div>
-                                 </div>
-                              </a>
-                           </li>
-                           <li class="notification-message">
-                              <a href="#">
-                                 <div class="media">
-                                    <span class="avatar avatar-sm">
-                                    <img class="avatar-img rounded-circle" alt="User Image" src="assets/img/profiles/avatar-17.jpg">
-                                    </span>
-                                    <div class="media-body">
-                                       <p class="noti-details"><span class="noti-title">John Hendry</span> sent a cancellation request <span class="noti-title">Apple iPhone XR</span></p>
-                                       <p class="noti-time"><span class="notification-time">8 mins ago</span></p>
-                                    </div>
-                                 </div>
-                              </a>
-                           </li>
-                           <li class="notification-message">
-                              <a href="#">
-                                 <div class="media">
-                                    <span class="avatar avatar-sm">
-                                    <img class="avatar-img rounded-circle" alt="User Image" src="assets/img/profiles/avatar-13.jpg">
-                                    </span>
-                                    <div class="media-body">
-                                       <p class="noti-details"><span class="noti-title">Mercury Software Inc</span> added a new product <span class="noti-title">Apple MacBook Pro</span></p>
-                                       <p class="noti-time"><span class="notification-time">12 mins ago</span></p>
-                                    </div>
-                                 </div>
-                              </a>
-                           </li>
+                           {% endfor %}
+
                         </ul>
                      </div>
                      <div class="topnav-dropdown-footer">
@@ -119,13 +84,13 @@
                            <img src="assets/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle">
                         </div>
                         <div class="user-text">
-                           <h6>Ryan Taylor</h6>
+                           <h6>{{user.username}}</h6>
                            <p class="text-muted mb-0">Administrator</p>
                         </div>
                      </div>
                      <a class="dropdown-item" href="profile.html">My Profile</a>
                      <a class="dropdown-item" href="inbox.html">Inbox</a>
-                     <a class="dropdown-item" href="login.html">Logout</a>
+                     <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                   </div>
                </li>
             </ul>
@@ -217,9 +182,9 @@
                      <li class="submenu">
                         <a href="#"><i class="fas fa-shield-alt"></i> <span> Authentication </span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="login.html">Login</a></li>
-                           <li><a href="register.html">Register</a></li>
-                           <li><a href="forgot-password.html">Forgot Password</a></li>
+                           <li><a href="{% url 'login' %}">Login</a></li>
+                           <li><a href="{% url 'signup' %}">Register</a></li>
+                           <li><a href="{% url 'forgot-password' %}">Forgot Password</a></li>
                            <li><a href="error-404.html">Error Page</a></li>
                         </ul>
                      </li>
@@ -290,6 +255,82 @@
          </div>
 
 
-    {% block body %}
+         {% block body %}
+            
+         {% endblock %}
 
-     {% endblock %}
+      </div>
+
+ 
+
+    
+      <script type="text/javascript">
+          document.addEventListener('DOMContentLoaded', function() {
+              // Select the notification dropdown element
+              const notiDropdown = document.querySelector('.noti-dropdown');
+              const clearAllBtn = document.querySelector('.clear-noti');
+      
+              if (notiDropdown) {
+                  // Add a click event listener to the notification dropdown
+                  notiDropdown.addEventListener('click', function() {
+                      const url = "{% url 'mark_notification_as_read' %}";
+      
+                      // Use the Fetch API to send a POST request to mark notifications as read
+                      fetch(url, {
+                          method: 'POST',
+                          headers: {
+                              'X-CSRFToken': '{{ csrf_token }}',
+                              'Content-Type': 'application/x-www-form-urlencoded',
+                          }
+                      })
+                      .then(response => response.json())  // Parse the JSON response
+                      .then(data => {
+                          if (data.status === 'success') {
+                              // Remove the badge if notifications are successfully marked as read
+                              const badge = document.querySelector('.badge');
+                              if (badge) {
+                                  badge.remove();
+                              }
+                          }
+                      })
+                      .catch(error => {
+                          console.error('Error:', error);  // Log any errors
+                      });
+                  });
+              }
+      
+              if (clearAllBtn) {
+                  // Add a click event listener to the "Clear All" button
+                  clearAllBtn.addEventListener('click', function() {
+                      const clearUrl = "{% url 'clear_all_notification' %}";  // Ensure this URL points to the correct view
+      
+                      // Use Fetch to send a POST request to clear all notifications
+                      fetch(clearUrl, {
+                          method: 'POST',
+                          headers: {
+                              'X-CSRFToken': '{{ csrf_token }}',
+                              'Content-Type': 'application/x-www-form-urlencoded',
+                          }
+                      })
+                      .then(response => response.json())  // Parse the JSON response
+                      .then(data => {
+                          if (data.status === 'success') {
+                              // Clear all notifications from the dropdown
+                              const notificationList = document.querySelector('.notification-list');
+                              if (notificationList) {
+                                  notificationList.innerHTML = '<li>No new notifications</li>';  // Optionally show a "No new notifications" message
+                              }
+                          }
+                      })
+                      .catch(error => {
+                          console.error('Error:', error);  // Log any errors
+                      });
+                  });
+              }
+          });
+      </script>
+      
+      
+  </body>
+  </html>
+    
