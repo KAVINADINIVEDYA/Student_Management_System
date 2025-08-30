@@ -138,7 +138,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_HOST_USER = 'your-email@gmail.com'  # Replace with your email
 # EMAIL_HOST_PASSWORD = 'your-email-password'  # Replace with your email password or app-specific password
 
-
+###
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # URL that handles the media served from MEDIA_ROOT
 MEDIA_URL = '/media/'
 

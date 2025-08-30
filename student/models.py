@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.utils.crypto import get_random_string
-
+ 
 # Create your models here.
 
 from django.db import models
@@ -37,7 +37,7 @@ class Student(models.Model):
     student_image = models.ImageField(upload_to='students/', blank=True)
     parent = models.OneToOneField(Parent, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
-
+     
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(f"{self.first_name}-{self.last_name}-{self.student_id}")

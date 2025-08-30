@@ -148,9 +148,10 @@ def edit_student(request, slug):
             return render(request, "students/edit-student.html", {'student': student, 'parent': parent})
     return render(request, "students/edit-student.html", {'student': student, 'parent': parent})
 
+
 @login_required
 def view_student(request, slug):
-    student = get_object_or_404(Student, slug=slug)
+    student = get_object_or_404(Student, student_id=slug)  # Use student_id
     context = {'student': student}
     return render(request, "students/student-details.html", context)
 
