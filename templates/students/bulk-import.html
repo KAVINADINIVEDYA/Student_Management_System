@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Import Students</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            background: #f9f9f9;
+        }
+        .upload-area:hover {
+            border-color: #007bff;
+            background: #f0f8ff;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        .btn:hover { background: #0056b3; }
+        .btn-secondary {
+            background: #6c757d;
+        }
+        .alert {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .alert-info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📥 Bulk Import Students</h1>
+        
+        <!-- Download Template Section -->
+        <div class="alert alert-info">
+            <h3>📋 Step 1: Download Template</h3>
+            <p>Download the CSV template to see the required format:</p>
+            <a href="{% url 'download_csv_template' %}" class="btn btn-secondary">📄 Download CSV Template</a>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="alert alert-info">
+            <h3>📤 Step 2: Upload Your CSV File</h3>
+            <p>Fill the template with student data and upload it below:</p>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="upload-area">
+                <h3>🔄 Select CSV File to Import</h3>
+                <input type="file" name="csv_file" accept=".csv" required style="margin: 20px 0;">
+                <br>
+                <small>Only CSV files are accepted. Make sure to follow the template format.</small>
+            </div>
+            
+            <div style="text-align: center;">
+                <button type="submit" class="btn">🚀 Import Students</button>
+                <a href="{% url 'student_list' %}" class="btn btn-secondary">← Back to Students</a>
+            </div>
+        </form>
+
+        <!-- Instructions -->
+        <div style="margin-top: 30px;">
+            <h3>📝 Instructions:</h3>
+            <ol>
+                <li>Download the CSV template using the button above</li>
+                <li>Fill in student information in the template</li>
+                <li>Save the file as CSV format</li>
+                <li>Upload the file using the form above</li>
+                <li>Check notifications for import results</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
