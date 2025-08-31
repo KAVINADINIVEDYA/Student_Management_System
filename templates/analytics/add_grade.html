@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Student Grade - ML Prediction</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .form-group { margin: 15px 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 300px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background-color: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .back-btn { background-color: #6c757d; }
+        .back-btn:hover { background-color: #545b62; }
+    </style>
+</head>
+<body>
+    <h1>🎯 Add Student Grade & ML Prediction</h1>
+    <p><em>This will use our trained Random Forest model to predict student performance</em></p>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="student">Select Student:</label>
+            <select name="student" id="student" required>
+                <option value="">Choose a student...</option>
+                {% for student in students %}
+                    <option value="{{ student.id }}">{{ student.first_name }} {{ student.last_name }} ({{ student.student_id }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="subject">Select Subject:</label>
+            <select name="subject" id="subject" required>
+                <option value="">Choose a subject...</option>
+                {% for subject in subjects %}
+                    <option value="{{ subject.id }}">{{ subject.name }} ({{ subject.code }})</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="assignment_score">Assignment Score (0-100):</label>
+            <input type="number" name="assignment_score" id="assignment_score" min="0" max="100" step="0.1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="exam_score">Exam Score (0-100):</label>
+            <input type="number" name="exam_score" id="exam_score" min="0" max="100" step="0.1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="attendance_percentage">Attendance Percentage (0-100):</label>
+            <input type="number" name="attendance_percentage" id="attendance_percentage" min="0" max="100" step="0.1" value="100" required>
+        </div>
+
+        <div class="form-group">
+            <label for="participation_score">Participation Score (0-100):</label>
+            <input type="number" name="participation_score" id="participation_score" min="0" max="100" step="0.1" required>
+        </div>
+
+        <button type="submit">🤖 Add Grade & Run ML Prediction</button>
+        <a href="{% url 'analytics_dashboard' %}"><button type="button" class="back-btn">Back to Analytics</button></a>
+    </form>
+</body>
+</html>

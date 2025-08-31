@@ -3,6 +3,8 @@ from django.http import HttpResponseForbidden
 from django.contrib import messages
 from .models import Teacher
 from school.models import Notification
+from django.shortcuts import render
+from notifications.models import Notification
 
 def add_teacher(request):
     if request.method == "POST":
@@ -91,3 +93,11 @@ def delete_teacher(request, slug):
         messages.success(request, "Teacher deleted successfully")
         return redirect('teacher_list')
     return HttpResponseForbidden()
+
+
+def teacher_dashboard(request):
+    teacher = request.user.teacher  # Assuming teacher is linked to user
+    return render(request, 'teachers/teacher-dashboard.html', {
+        'teacher': teacher,
+        'user': request.user  # Pass user for notifications
+    })

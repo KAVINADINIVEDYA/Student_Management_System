@@ -27,6 +27,11 @@ urlpatterns = [
     path('teacher/',include("teacher.urls")),
     path('subject/', include("subject.urls")),
 
+    path('analytics/', include("analytics.urls")),
+    
+    ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0]) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+ 
 
   
 ] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS[0]) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
