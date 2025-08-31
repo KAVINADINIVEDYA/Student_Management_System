@@ -38,6 +38,86 @@ class PerformanceAnalytics(models.Model):
     def __str__(self):
         return f"{self.student.first_name} - Risk: {self.risk_level}"
 
+class AttendanceRecord(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    date = models.DateField()
+    status = models.CharField(max_length=10, choices=[
+        ('PRESENT', 'Present'),
+        ('ABSENT', 'Absent'),
+        ('LATE', 'Late'),
+        ('EXCUSED', 'Excused')
+    ])
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ('student', 'subject', 'date')
+    
+    def __str__(self):
+        return f"{self.student.first_name} - {self.subject.name} - {self.date}: {self.status}"
+
+class AttendanceAnalytics:
+    """GitHub-inspired attendance analytics system"""
+    
+    @staticmethod
+    def calculate_attendance_percentage(student, subject=None, days=30):
+        """Calculate attendance percentage for student"""
+        from django.utils import timezone
+        from datetime import timedelta
+        
+        end_date = timezone.now().date()
+        start_date = end_date - timedelta(days=days)
+        
+        query = AttendanceRecord.objects.filter(
+            student=student,
+            date__range=[start_date, end_date]
+        )
+        
+        if subject:
+            query = query.filter(subject=subject)
+        
+        total_records = query.count()
+        if total_records == 0:
+            return 100.0  # No records = 100%
+        
+        present_records = query.filter(status__in=['PRESENT', 'LATE']).count()
+        return (present_records / total_records) * 100
+    
+    @staticmethod
+    def get_attendance_trends(student, days=30):
+        """Get attendance trends and generate alerts"""
+        from django.utils import timezone
+        from datetime import timedelta
+        
+        percentage = AttendanceAnalytics.calculate_attendance_percentage(student, days=days)
+        
+        # Generate automated alerts based on GitHub webhook-style system
+        alerts = []
+        if percentage < 75:
+            alerts.append({
+                'level': 'CRITICAL',
+                'message': f'Attendance below 75% ({percentage:.1f}%)',
+                'action': 'Immediate intervention required'
+            })
+        elif percentage < 85:
+            alerts.append({
+                'level': 'WARNING', 
+                'message': f'Attendance declining ({percentage:.1f}%)',
+                'action': 'Monitor closely'
+            })
+        else:
+            alerts.append({
+                'level': 'SUCCESS',
+                'message': f'Good attendance ({percentage:.1f}%)',
+                'action': 'Maintain current level'
+            })
+        
+        return {
+            'percentage': percentage,
+            'alerts': alerts,
+            'trend': 'DECLINING' if percentage < 80 else 'STABLE'
+        }
+
 class MLModel:
     @staticmethod
     def generate_sample_data():
