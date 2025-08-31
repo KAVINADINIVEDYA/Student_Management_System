@@ -29,7 +29,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'school',
     'student',
-    'home_auth'
+    'home_auth',
+    'teacher',
+    'subject',
+    
+    
 ]
 
 MIDDLEWARE = [
@@ -43,6 +47,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Home.urls'
+
+ 
 
 TEMPLATES = [
     {

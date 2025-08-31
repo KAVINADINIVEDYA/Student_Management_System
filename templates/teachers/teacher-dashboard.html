@@ -1,0 +1,119 @@
+<!-- templates/teachers/teacher-dashboard.html -->
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block body %}
+<div class="page-wrapper">
+   <div class="content container-fluid">
+      <div class="page-header">
+         <div class="row">
+            <div class="col-sm-12">
+               <h3 class="page-title">Welcome {{ teacher.first_name }} {{ teacher.last_name }}!</h3>
+               <ul class="breadcrumb">
+                  <li class="breadcrumb-item active">Dashboard</li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+               <div class="card-body">
+                  <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
+                  <div class="dash-widget-info">
+                     <h3>50</h3>
+                     <span>Students</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+               <div class="card-body">
+                  <span class="dash-widget-icon"><i class="fa fa-book"></i></span>
+                  <div class="dash-widget-info">
+                     <h3>10</h3>
+                     <span>Courses</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+               <div class="card-body">
+                  <span class="dash-widget-icon"><i class="fa fa-calendar"></i></span>
+                  <div class="dash-widget-info">
+                     <h3>5</h3>
+                     <span>Events</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+            <div class="card dash-widget">
+               <div class="card-body">
+                  <span class="dash-widget-icon"><i class="fa fa-bell"></i></span>
+                  <div class="dash-widget-info">
+                     <h3>{{ notifications.count }}</h3>
+                     <span>Notifications</span>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-md-12">
+            <div class="card">
+               <div class="card-header">
+                  <h4 class="card-title mb-0">Teacher Profile</h4>
+               </div>
+               <div class="card-body">
+                  <div class="row">
+                     <div class="col-md-3">
+                        <div class="profile-img">
+                           {% if teacher.teacher_image %}
+                              <img src="{{ teacher.teacher_image.url }}" alt="Teacher Image" class="img-fluid">
+                           {% else %}
+                              <img src="{% static 'assets/img/user.jpg' %}" alt="Default Image" class="img-fluid">
+                           {% endif %}
+                        </div>
+                     </div>
+                     <div class="col-md-9">
+                        <h5>{{ teacher.first_name }} {{ teacher.last_name }}</h5>
+                        <p><strong>Teacher ID:</strong> {{ teacher.teacher_id }}</p>
+                        <p><strong>Department:</strong> {{ teacher.department }}</p>
+                        <p><strong>Email:</strong> {{ teacher.email }}</p>
+                        <p><strong>Mobile:</strong> {{ teacher.mobile_number }}</p>
+                        <p><strong>Joining Date:</strong> {{ teacher.joining_date|date:"Y-m-d" }}</p>
+                        <p><strong>Address:</strong> {{ teacher.address }}</p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+ 
+
+<script src="{%static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+
+<script src="{%static 'assets/js/popper.min.js' %}"></script>
+<script src="{%static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+
+<script src="{%static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+
+<script src="{%static 'assets/plugins/apexchart/apexcharts.min.js' %}"></script>
+<script src="{%static 'assets/plugins/apexchart/chart-data.js' %}"></script>
+
+<script src="{%static 'assets/plugins/simple-calendar/jquery.simple-calendar.js' %}"></script>
+<script src="{%static 'assets/js/calander.js' %}"></script>
+
+<script src="{%static 'assets/js/circle-progress.min.js' %}"></script>
+
+<script src="{%static 'assets/js/script.js' %}"></script>
+</body>
+
+<!-- Mirrored from preschool.dreamguystech.com/html-template/student-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 Oct 2021 11:11:43 GMT -->
+</html>
+
+{% endblock %}
