@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ML Analytics Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .card { border: 1px solid #ddd; padding: 20px; margin: 10px 0; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .warning { background-color: #fff3cd; color: #856404; }
+        .danger { background-color: #f8d7da; color: #721c24; }
+        button { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>🤖 ML Analytics Dashboard</h1>
+    <p><strong>Open-Source Integration:</strong> Using Random Forest from scikit-learn for student performance prediction</p>
+    
+    <div class="card">
+        <h3>Quick Actions</h3>
+        <a href="{% url 'add_student_grade' %}"><button>Add Student Grade & Run ML Prediction</button></a>
+        <a href="{% url 'train_ml_model' %}"><button>Retrain ML Model</button></a>
+        <a href="{% url 'dashboard' %}"><button>Back to Main Dashboard</button></a>
+    </div>
+
+    <div class="card">
+        <h3>Recent ML Predictions</h3>
+        {% if recent_analytics %}
+            {% for analytics in recent_analytics %}
+                <div class="card {% if analytics.risk_level == 'HIGH' %}danger{% elif analytics.risk_level == 'MEDIUM' %}warning{% else %}success{% endif %}">
+                    <strong>{{ analytics.student.first_name }} {{ analytics.student.last_name }}</strong><br>
+                    Predicted GPA: {{ analytics.predicted_gpa|floatformat:2 }}<br>
+                    Risk Level: {{ analytics.risk_level }}<br>
+                    Recommendations: {{ analytics.recommendations }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No ML predictions yet. Add some student grades to see predictions!</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h3>System Status</h3>
+        <p>✅ ML Model: Random Forest Regressor (scikit-learn)</p>
+        <p>✅ Students: {{ students.count }}</p>
+        <p>✅ Subjects: {{ subjects.count }}</p>
+    </div>
+</body>
+</html>
