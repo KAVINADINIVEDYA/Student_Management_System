@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'student',
     'home_auth',
     'teacher',
+    'subject',
+    
     
 ]
 
@@ -45,6 +47,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Home.urls'
+
+ 
 
 TEMPLATES = [
     {
